@@ -52,10 +52,15 @@ This will start:
 
 ```bash
 docker exec -it mysql-master mysql -uroot -prootpass
-SHOW MASTER STATUS;
+SHOW BINARY LOG STATUS;
+
+OR
+
+docker exec -it mysql-master mysql -uroot
+SHOW BINARY LOG STATUS;
 ```
 
-Note the `File` and `Position` values (e.g., `mysql-bin.000001` and `154`).
+Note the `File` and `Position` values (e.g., `mysql-bin.000003` and `158`).
 
 #### Set Up the Slave
 
@@ -66,8 +71,8 @@ CHANGE REPLICATION SOURCE TO
   SOURCE_HOST='mysql-master',
   SOURCE_USER='repl',
   SOURCE_PASSWORD='replpass',
-  SOURCE_LOG_FILE='mysql-bin.000001',
-  SOURCE_LOG_POS=154;
+  SOURCE_LOG_FILE='mysql-bin.000003',
+  SOURCE_LOG_POS=158;
 
 START REPLICA;
 ```

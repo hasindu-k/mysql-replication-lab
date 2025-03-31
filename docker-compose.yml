@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mysql-master:
@@ -11,6 +11,7 @@ services:
       - "3307:3306"
     volumes:
       - ./master-init:/docker-entrypoint-initdb.d
+    command: --server-id=1 --log-bin=mysql-bin
 
   mysql-slave:
     image: mysql:8
