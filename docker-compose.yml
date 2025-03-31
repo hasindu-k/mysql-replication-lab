@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql-master:
+    image: mysql:8
+    container_name: mysql-master
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./master-init:/docker-entrypoint-initdb.d
+
+  mysql-slave:
+    image: mysql:8
+    container_name: mysql-slave
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3308:3306"
+    depends_on:
+      - mysql-master
+    volumes:
+      - ./slave-init:/docker-entrypoint-initdb.d
